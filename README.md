@@ -1,0 +1,1 @@
+Bangun aplikasi sosial modern dengan UI menakjubkan dengan nuansa seluler asli, tumpukan teknologi khusus, fitur gulir tak terbatas, dan kinerja luar biasa menggunakan React JS, Appwrite, TypeScript, dan banyak lagi.
