@@ -48,19 +48,29 @@ export async function saveUserToDB(user: {
     }
 }
 
-export async function signInAccount(user: { email: string; password: string; }){
-    try {
-        const session = await account.createEmailSession(user.email, user.password);
+export async function signInAccount(user: { email: string; password: string }) {
+  try {
+    const session = await account.createEmailSession(user.email, user.password);
 
-        return session;
-    } catch (error) {
-        console.log(error)
-    }
+    return session;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getAccount() {
+  try {
+    const currentAccount = await account.get();
+    return currentAccount;
+  } catch (error) {
+    console.error("Error while getting account:", error);
+    return null; // Mengembalikan null jika terjadi kesalahan
+  }
 }
 
 export async function getCurrentUser() {
     try {
-        const currentAccount = await account.get();
+        const currentAccount = await getAccount();
 
         if (!currentAccount) throw Error;
 
@@ -169,13 +179,17 @@ export async function deleteFile(fileId: string) {
     }
 }
 export async function getRecentPosts() {
-    const posts = await databases.listDocuments(
-        appwriteConfig.databaseId,
-        appwriteConfig.postCollectionId,
-        [Query.orderDesc('$createdAt'), Query.limit(20)]
-    )
-    if(!posts) throw Error;
-    return posts;
+    try {
+      const posts = await databases.listDocuments(
+          appwriteConfig.databaseId,
+          appwriteConfig.postCollectionId,
+          [Query.orderDesc('$createdAt'), Query.limit(20)]
+      )
+      if(!posts) throw Error;
+      return posts;
+    } catch (error) {
+      console.log(error);
+    }
 }
 export async function likePost(postId: string, likesArray: string[]) {
   try {
@@ -231,9 +245,9 @@ export async function getPostById(postId: string) {
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
       postId
-    )
+    );
     return post;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
