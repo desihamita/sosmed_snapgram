@@ -13,8 +13,7 @@ const PostDetails = () => {
   const { user } = useUserContext();
   const { mutate: deletePost } = useDeletePost();
 
-  const handleDeletePost = () => {
-  } 
+  const handleDeletePost = () => {} 
 
   return (
     <div className="post_details-container">
